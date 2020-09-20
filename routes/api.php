@@ -17,4 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('tasks', 'TaskController');
+Route::resource('tasks', 'TaskController')->middleware('auth:api');
+Route::post('login', 'Api\AuthController@login');
+
+Route::get('login', function () {
+    return response()->json(['message' => 'Unauthenticated 401.'], 401);
+})->name('login');
