@@ -9,25 +9,16 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * get all tasks with comments ans users
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $tasks = Task::with(['comments', 'user'])->get();
+        $tasks = Task::all();
         return response(TaskResource::collection($tasks));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,22 +39,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        try {
-            return new TaskResource(Task::find($id));
-        } catch (\Exception $ex) {
-            return response(['msg' => 'error']);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $task = Task::find($id);
+        return new TaskResource($task);
     }
 
     /**
